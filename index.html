@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LinkedIn Showcase</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1c1c1c);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    padding: 40px;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    text-align: center;
+    animation: fadeUp 1.2s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+h1 {
+    color: white;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.linkedin-wrapper {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.linkedin-wrapper:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+}
+
+/* Floating glow effect */
+body::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,170,255,0.4), transparent 70%);
+    top: -150px;
+    right: -150px;
+    z-index: 0;
+    animation: float 6s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+    from { transform: translateY(0); }
+    to { transform: translateY(40px); }
+}
+
+.container * {
+    position: relative;
+    z-index: 1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Featured LinkedIn Post</h1>
+    <p class="subtitle">Professional update & achievements</p>
+
+    <div class="linkedin-wrapper">
+        <!-- LINKEDIN EMBED -->
+        <blockquote class="linkedin-post" data-url="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7422679610875609089"></blockquote>
+    </div>
+</div>
+
+<!-- LinkedIn Embed Script -->
+<script src="https://platform.linkedin.com/in.js" type="text/javascript"> lang: en_US</script>
+
+<script>
+// Optional smooth entrance delay
+window.addEventListener("load", () => {
+    document.querySelector(".container").style.opacity = "1";
+});
+</script>
+
+</body>
+</html>
