@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LinkedIn Fullscreen Viewer</title>
+<title>LinkedIn Book Viewer</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -37,6 +37,7 @@ body {
     box-shadow:0 20px 60px rgba(0,0,0,0.4);
     text-align:center;
     position:relative;
+    transition: all 0.4s ease;
 }
 
 h1 { color:white; margin-bottom:10px; }
@@ -67,11 +68,10 @@ iframe {
     border-radius:8px;
     cursor:pointer;
     font-size:12px;
+    z-index:2;
 }
 
-/* ================= FULLSCREEN MODE ================= */
-
-/* Make viewer occupy entire screen */
+/* ===== FULLSCREEN MODE ===== */
 .viewer:fullscreen {
     width:100vw;
     height:100vh;
@@ -79,16 +79,15 @@ iframe {
     box-shadow:none;
 }
 
-/* Iframe fills screen */
 .viewer:fullscreen iframe {
     height:100vh;
 }
 
-/* Hide everything else when fullscreen */
 .viewer:fullscreen .fullscreen-btn {
     display:none;
 }
 
+/* Hide page UI when iframe fullscreen */
 body:has(.viewer:fullscreen) .container > *:not(.viewer) {
     display:none;
 }
@@ -102,12 +101,17 @@ body:has(.viewer:fullscreen) .container > *:not(.viewer) {
 <body>
 
 <div class="container">
-    <h1>Featured LinkedIn Post</h1>
-    <p class="subtitle">Professional update & achievements</p>
+    <h1>Book from LinkedIn Post</h1>
+    <p class="subtitle">Click fullscreen for immersive reading</p>
 
     <div class="viewer" id="viewer">
         <button class="fullscreen-btn" onclick="goFullscreen()">⛶ Fullscreen</button>
-        <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7422679610875609089"></iframe>
+
+        <iframe 
+            src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7422679610875609089"
+            allowfullscreen
+            allow="fullscreen"
+        ></iframe>
     </div>
 </div>
 
@@ -115,7 +119,7 @@ body:has(.viewer:fullscreen) .container > *:not(.viewer) {
 function goFullscreen() {
     const el = document.getElementById("viewer");
     if (!document.fullscreenElement) {
-        el.requestFullscreen();
+        el.requestFullscreen().catch(err => console.log(err));
     }
 }
 </script>
