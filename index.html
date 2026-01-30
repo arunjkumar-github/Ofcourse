@@ -3,99 +3,99 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>LinkedIn Showcase</title>
+<title>LinkedIn Fullscreen Viewer</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
 
 body {
     height: 100vh;
-    background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1c1c1c);
+    background: linear-gradient(-45deg,#0f2027,#203a43,#2c5364,#1c1c1c);
     background-size: 400% 400%;
     animation: gradientBG 12s ease infinite;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
 }
 
 .container {
-    width: 90%;
-    max-width: 900px;
-    padding: 40px;
-    border-radius: 25px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(25px);
-    border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    text-align: center;
-    position: relative;
+    width:90%;
+    max-width:900px;
+    padding:40px;
+    border-radius:25px;
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(25px);
+    border:1px solid rgba(255,255,255,0.15);
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+    text-align:center;
+    position:relative;
 }
 
-h1 {
-    color: white;
-    margin-bottom: 10px;
-}
+h1 { color:white; margin-bottom:10px; }
+.subtitle { color:rgba(255,255,255,0.7); margin-bottom:30px; font-size:14px; }
 
-.subtitle {
-    color: rgba(255,255,255,0.7);
-    margin-bottom: 30px;
-    font-size: 14px;
-}
-
-.linkedin-wrapper {
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-    position: relative;
+.viewer {
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+    position:relative;
 }
 
 iframe {
-    width: 100%;
-    height: 620px;
-    border: none;
+    width:100%;
+    height:620px;
+    border:none;
 }
 
-/* Fullscreen button */
+/* Button */
 .fullscreen-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 10px 14px;
-    background: rgba(0,0,0,0.6);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 12px;
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
+    position:absolute;
+    top:15px;
+    right:15px;
+    padding:10px 14px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:12px;
 }
 
-.fullscreen-btn:hover {
-    background: rgba(0,0,0,0.9);
+/* ================= FULLSCREEN MODE ================= */
+
+/* Make viewer occupy entire screen */
+.viewer:fullscreen {
+    width:100vw;
+    height:100vh;
+    border-radius:0;
+    box-shadow:none;
 }
 
-/* When in fullscreen */
-.linkedin-wrapper:fullscreen iframe {
-    height: 100vh;
+/* Iframe fills screen */
+.viewer:fullscreen iframe {
+    height:100vh;
 }
 
-.linkedin-wrapper:-webkit-full-screen iframe {
-    height: 100vh;
+/* Hide everything else when fullscreen */
+.viewer:fullscreen .fullscreen-btn {
+    display:none;
 }
+
+body:has(.viewer:fullscreen) .container > *:not(.viewer) {
+    display:none;
+}
+
+/* Safari support */
+.viewer:-webkit-full-screen { width:100vw; height:100vh; border-radius:0; }
+.viewer:-webkit-full-screen iframe { height:100vh; }
 </style>
 </head>
 
@@ -105,21 +105,17 @@ iframe {
     <h1>Featured LinkedIn Post</h1>
     <p class="subtitle">Professional update & achievements</p>
 
-    <div class="linkedin-wrapper" id="linkedinBox">
-        <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
-
+    <div class="viewer" id="viewer">
+        <button class="fullscreen-btn" onclick="goFullscreen()">⛶ Fullscreen</button>
         <iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7422679610875609089"></iframe>
     </div>
 </div>
 
 <script>
-const box = document.getElementById("linkedinBox");
-
-function toggleFullscreen() {
+function goFullscreen() {
+    const el = document.getElementById("viewer");
     if (!document.fullscreenElement) {
-        box.requestFullscreen();
-    } else {
-        document.exitFullscreen();
+        el.requestFullscreen();
     }
 }
 </script>
